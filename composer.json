@@ -1,0 +1,21 @@
+{
+    "name": "gimmeursocks/mvc",
+    "description": "Simple MVC framework with PHP",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Core\\": "core/"
+        },
+        "files": ["core/helpers/app.php"]
+    },
+    "authors": [
+        {
+            "name": "gimmeursocks",
+            "email": "bobteen1@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.8",
+        "tecnickcom/tcpdf": "^6.6"
+    }
+}

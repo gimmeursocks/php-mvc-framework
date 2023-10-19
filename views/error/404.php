@@ -1,0 +1,1 @@
+<img src="public\img\404.webp" alt="404 error" width="100%">
