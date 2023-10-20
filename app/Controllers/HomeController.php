@@ -2,12 +2,11 @@
 namespace App\Controllers;
 
 class HomeController{
-    public static function test(){
-        return view('home/index');
+    public static function home(){
+        return view('home/index',["ok" => strtok($_SERVER["REQUEST_URI"],'?')]);
     }
 
-    public function rekt(){
+    public static function mail(){
         return \App\Models\EmailSender::sendEmail("bobteen1@gmail.com","wassap","hello");
     }
-    
 }

@@ -3,7 +3,6 @@
 define('APP_NAME', 'MVC Framework');
 define('APP_ROOT', dirname(dirname(__FILE__)));
 define('URL_SUBFOLDER', '/mvc');
-define('URL_ROOT', 'http://localhost/mvc');
 
 //DB Info
 define('DB_HOST', 'localhost:3306');

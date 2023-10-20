@@ -13,14 +13,12 @@ class Framework{
         $this->view = new View();
         $this->request = new Request();
     }
-    /**
-     * @throws \Exception
-     */
+
     public function run(){
         //run the match function to get the class and method
         $callable = $this->match($this->urlEngine->method(), $this->urlEngine->path());
+        //if not in map array call 404 page
         if (!$callable){
-            // throw new \Exception('Oops! you are lost', 404);
             return $this->view->_404();
         }
         //call the class, pass the method
@@ -30,12 +28,14 @@ class Framework{
             throw new \Exception('Class does not exist', 500);
         }
 
+        $class = new $class();
         $method = $callable['method'];
 
-        if (!is_callable($class, $method)){
+        //if arguments not passed in an array
+        //is_callable treats the second arg as bool
+        if (!is_callable(array($class, $method))){        
             throw new \Exception("$method is not a valid method in class $callable[class]", 500);
-        }
-        $class = new $class();
+        }    
 
         //run the method
         $class->$method($this->request);
@@ -43,16 +43,15 @@ class Framework{
     }
 
     private function match($method, $url){
-        foreach ($this->router::$map[$method] as $uri=>$call){
+        foreach ($this->router::getMap()[$method] as $uri=>$call){
             //does the $url have a trailing slash? if yes, remove it
             //make sure the only string present is not the slash
             if (substr($url, -1) === '/' && $uri != '/'){
                 //remove the slash
                 $url = substr($url, 0, -1);
             }
-
+            //either use url_subfolder or configure your server directory
             $uri = URL_SUBFOLDER . $uri;
-            //if our $uri does not contain a pre-slash, we add it
             if ($url == $uri){
                 return $call;
             }
