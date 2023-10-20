@@ -9,8 +9,5 @@ class HomeController{
     public function rekt(){
         return \App\Models\EmailSender::sendEmail("bobteen1@gmail.com","wassap","hello");
     }
-
-    public function mmm(){
-        echo "hello";
-    }
+    
 }

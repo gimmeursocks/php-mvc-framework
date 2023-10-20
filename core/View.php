@@ -37,6 +37,6 @@ class View{
 
     public function _404(){
         http_response_code(404);
-        return $this->render('error/404');
+        return $this->render('error/404',["404_img" => URL_SUBFOLDER."/public/img/404.webp"]);
     }
 }
