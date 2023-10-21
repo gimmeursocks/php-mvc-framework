@@ -1,25 +1,16 @@
 <?php
-
-
 namespace Core;
 
-
 class View{
-    /**
-     * @throws \Exception
-     */
     public function render($view, $params = []){
         if (is_readable(APP_ROOT."/views/$view.php")){
-            return $this->generateView("shared/template", array("body"=>file_get_contents(APP_ROOT."/views/$view.php"))+$params);
+            return $this->generateView($view, $params);
         }
         else{
             return $this->_404();
         }
     }
 
-    /**
-     * @throws \Exception
-     */
     private function generateView($view, $params){
         ob_start();
         require_once APP_ROOT."/views/$view.php";
@@ -30,13 +21,24 @@ class View{
             $content = str_replace("{{".$key."}}",$value, $content);
         }
 
-        echo $content;         
+        echo $this->integrateTemplate($content);
 
         return true;
     }
 
+    private function integrateTemplate($body){
+        ob_start();
+        require_once APP_ROOT."/views/shared/template.php";
+        $content = ob_get_contents();
+        ob_end_clean();
+        
+        $content = str_replace("{{body}}", $body, $content);
+        
+        return $content;
+    }
+
     public function _404(){
         http_response_code(404);
-        return $this->render('error/404',["404_img" => URL_SUBFOLDER."/public/img/404.webp"]);
+        return $this->render('error/404');
     }
 }

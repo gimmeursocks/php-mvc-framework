@@ -1,1 +1,1 @@
-<h1 style="margin-left: 1rem;">{{ok}}</h1>
+<h1 style="margin-left: 1rem;"><?php echo strtok($_SERVER["REQUEST_URI"],"?") ?></h1>
